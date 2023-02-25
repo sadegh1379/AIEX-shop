@@ -6,15 +6,12 @@ function HomeScreen() {
 
   const { data, isLoading } = useQuery(['products'], getProducts);
 
-  console.log(data);
-
-  if (isLoading) return null;
-
   return (
     <div>
       <h2>Featured products</h2>
       <div className="products">
-        {data.map((product, i) => (
+        {isLoading && <span>loading...</span>}
+        {!isLoading && data.map((product, i) => (
           <div key={i} className="product">
             <Link to={`/product/${product.slug}`}>
               <img src={product.image} alt={product.name} />
