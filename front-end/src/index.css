@@ -18,14 +18,9 @@ main {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 20px auto;
 }
 
-.product {
-  border: 1px solid #333;
-  margin: 1rem;
-}
-
-.product img {
-  width: 100%;
-  max-width: 400px;
+.card-img-top {
+  max-height: 250px;
 }

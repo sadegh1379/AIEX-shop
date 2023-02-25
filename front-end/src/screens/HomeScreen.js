@@ -10,7 +10,7 @@ function HomeScreen() {
     <div>
       <h2 className="text-dark my-2">Featured products</h2>
       <div className="products">
-        <Row>
+        <Row className="px-4">
           {isLoading && <span>loading...</span>}
           {!isLoading &&
             data.map((product, i) => <Product key={i} product={product} />)}
