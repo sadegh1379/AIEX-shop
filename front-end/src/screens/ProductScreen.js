@@ -4,7 +4,7 @@ function ProductScreen() {
      const { slug } = useParams();
   return (
     <div>
-      <h1>product screens {slug}</h1>
+      <h1>product screens test {slug}</h1>
     </div>
   )
 }
