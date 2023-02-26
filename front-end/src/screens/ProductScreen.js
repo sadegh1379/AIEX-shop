@@ -9,29 +9,33 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import StarRatings from "react-star-ratings";
+import { Helmet } from "react-helmet-async";
+import { getError } from "../helper";
+import MessageBox from "../components/MessageBox";
+import LoadingBox from "../components/LoadingBox";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/app.slice";
 
 function ProductScreen() {
+  const dispatch = useDispatch();
+  const { cart } = useSelector((state) => state.app);
+  console.log(cart);
   const { slug } = useParams();
-
   const {
     data: product,
     isLoading,
     error,
   } = useQuery(["product", slug], () => getProduct(slug));
 
-  console.log(product);
+  const addToCartHandler = () => {
+    dispatch(addToCart({ ...product, quntity: 1 }));
+  };
 
-  if (isLoading) {
-    return (
-      <div className="text-center pt-5">
-        <span>is loading...</span>
-      </div>
-    );
-  }
+  if (isLoading) return <LoadingBox />;
   if (!isLoading && error) {
     return (
       <div className="text-center pt-5">
-        <span>{error?.response?.data}</span>
+        <MessageBox variant={"danger"} text={getError(error)} />
       </div>
     );
   }
@@ -42,6 +46,9 @@ function ProductScreen() {
       </Col>
       <Col md={3}>
         <ListGroup variant="flush">
+          <Helmet>
+            <title>{product.name}</title>
+          </Helmet>
           <ListGroup.Item>
             <h2>{product.name}</h2>
           </ListGroup.Item>
@@ -73,9 +80,12 @@ function ProductScreen() {
               </ListGroup.Item>
               {product.countInStock > 0 && (
                 <ListGroup.Item>
-                    <Button className="w-100 btn btn-warning">
-                      add to card
-                    </Button>
+                  <Button
+                    onClick={addToCartHandler}
+                    className="w-100 btn btn-warning"
+                  >
+                    add to card
+                  </Button>
                 </ListGroup.Item>
               )}
             </ListGroup>
