@@ -24,3 +24,6 @@ main {
 .card-img-top {
   max-height: 250px;
 }
+.img-large{
+  max-width: 80%;
+}
