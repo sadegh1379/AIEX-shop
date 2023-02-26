@@ -3,8 +3,11 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import StarRatings from "react-star-ratings";
+import { addToCart } from "../redux/app.slice";
+import { useDispatch } from "react-redux";
 
 function Product({ product }) {
+  const dispatch = useDispatch();
   return (
     <Col xs={12} sm={6} md={4} lg={3}>
       <Card className="product">
@@ -30,7 +33,7 @@ function Product({ product }) {
               starSpacing="0px"
               />
               </Card.Text>
-            <Button className="w-100 btn btn-warning">add to card</Button>
+            <Button onClick={() => dispatch(addToCart({...product, quntity: 1}))} className="w-100 btn btn-warning">add to card</Button>
         </Card.Body>
       </Card>
     </Col>

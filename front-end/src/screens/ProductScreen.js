@@ -15,6 +15,7 @@ import MessageBox from "../components/MessageBox";
 import LoadingBox from "../components/LoadingBox";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/app.slice";
+import axios from "axios";
 
 function ProductScreen() {
   const dispatch = useDispatch();
@@ -27,8 +28,15 @@ function ProductScreen() {
     error,
   } = useQuery(["product", slug], () => getProduct(slug));
 
-  const addToCartHandler = () => {
-    dispatch(addToCart({ ...product, quntity: 1 }));
+  const addToCartHandler = async () => {
+     const exsist = cart.cartItems.find(item => item._id === product._id);
+     const quntity = exsist ? exsist.quntity + 1 : 1;
+     const { data } = await axios.get(`/api/products/${product._id}`);
+     if(+data.countInStock < quntity){
+          window.alert('Sorry, product quantity is out of stock')
+          return
+     }
+    dispatch(addToCart({ ...product, quntity }));
   };
 
   if (isLoading) return <LoadingBox />;

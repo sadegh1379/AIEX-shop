@@ -11,7 +11,19 @@ export const appSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     addToCart: (state, action) => {
-      state.cart.cartItems = [...state.cart.cartItems, action.payload];
+      const newItem = action.payload;
+      const exsistItem = state.cart.cartItems.find(
+        (item) => item._id === newItem._id
+      );
+      const cartItems = exsistItem
+        ? state.cart.cartItems.map((item) => {
+            if (item._id === newItem._id) {
+              return newItem;
+            }
+            return item;
+          })
+        : [...state.cart.cartItems, newItem];
+      state.cart.cartItems = cartItems;
     },
   },
 });
