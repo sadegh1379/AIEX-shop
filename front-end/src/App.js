@@ -7,6 +7,7 @@ import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector } from "react-redux";
 import Badge from "react-bootstrap/Badge";
+import CartScreen from "./screens/CartScreen";
 
 function App() {
   const { cart } = useSelector((state) => state.app);
@@ -24,7 +25,7 @@ function App() {
                 <Link className="nav-link" to="/cart">
                   cart
                   {cart.cartItems.length > 0 && (
-                    <Badge bg="danger" pill>{cart.cartItems.length}</Badge>
+                    <Badge bg="danger" pill>{cart.cartItems.reduce((a, c) => a + c.quntity, 0)}</Badge>
                   )}
                 </Link>
               </Nav>
@@ -35,6 +36,7 @@ function App() {
           <Container className="mt-3">
             <Routes>
               <Route path="/" element={<HomeScreen />} />
+              <Route path="/cart" element={<CartScreen />} />
               <Route path="/product/:slug" element={<ProductScreen />} />
             </Routes>
           </Container>

@@ -7,7 +7,7 @@ import Product from "../components/Product";
 
 function HomeScreen() {
   const { data, isLoading } = useQuery(["products"], getProducts);
-
+  
   return (
     <div>
       <Helmet>
